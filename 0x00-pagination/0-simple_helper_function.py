@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """
-This module is the define a function named index_range that takes two integer arguments page and page_size
+This module is the define a function named index_range
+that takes two integer arguments page and page_size
 """
 from typing import Tuple
 
