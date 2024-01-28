@@ -15,6 +15,7 @@ def index_range(page: int, page_size: int) -> Tuple[int, int]:
     end_in = start_in + page_size
     return start_in, end_in
 
+
 class Server:
     """
     define server class to paginate a database of popular baby names
@@ -40,8 +41,10 @@ class Server:
         """
         Returns the specified page of the dataset
         """
-        assert isinstance(page, int) and page > 0, "Page must be a positive integer"
-        assert isinstance(page_size, int) and page_size > 0, "Page size must be a positive integer"
+        assert isinstance(page, int) and page > 0,
+        "Page must be a positive integer"
+        assert isinstance(page_size, int) and page_size > 0,
+        "Page size must be a positive integer"
 
         start, end = index_range(page, page_size)
         return self.dataset()[start:end]
