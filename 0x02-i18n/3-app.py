@@ -1,32 +1,45 @@
 #!/usr/bin/env python3
-"""Flask app with internationalization using Babel"""
+"""
+Flask app with Babel configuration, get_locale function, and gettext usage.
+"""
 
-from flask import Flask, render_template
-from flask_babel import Babel, _
+from flask import Flask, render_template, request
+from flask_babel import Babel
+
 
 app = Flask(__name__)
 babel = Babel(app)
 
 
 class Config:
-    """Config class for Flask app"""
+    """
+    Configuration class with language settings.
+    """
     LANGUAGES = ["en", "fr"]
     BABEL_DEFAULT_LOCALE = "en"
     BABEL_DEFAULT_TIMEZONE = "UTC"
 
 
-@app.route('/')
-def index():
-    """Route handler for the / route."""
-    return render_template('3-index.html', title=_('home_title'), header=_('home_header'))
+app.config.from_object(Config)
 
 
 @babel.localeselector
 def get_locale():
-    """Determine the best-matching language for the user."""
-    return request.accept_languages.best_match(Config.LANGUAGES)
+    """
+    Determine the best-matching language using request.accept_languages.
+
+    Returns:
+        str: Best-matching language code.
+    """
+    return request.accept_languages.best_match(app.config["LANGUAGES"])
 
 
-if __name__ == '__main__':
-    app.config.from_object(Config)
-    app.run(host='0.0.0.0', port=5000)
+@app.route("/")
+def index():
+    """
+    Route handler for the main page.
+
+    Returns:
+        str: Rendered HTML template with translated messages.
+    """
+    return render_template("3-index.html")
